@@ -70,10 +70,9 @@ systemctl stop xray
 systemctl stop trojan-go
 echo -e "\e[0;32mStart renew your Certificate SSL\e[0m"
 sleep 1
-/root/.acme.sh/acme.sh --server $acmeh \
-        --register-account  --accountemail $emailcf
-/root/.acme.sh/acme.sh --server $acmeh --issue -d $domain --standalone -k ec-256 --force
-~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /usr/local/etc/xray/xray.crt --keypath /usr/local/etc/xray/xray.key --ecc
+/root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
+/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
+~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key --ecc
 systemctl start xray
 systemctl start trojan-go
 echo Done
